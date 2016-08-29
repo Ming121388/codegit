@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<title>Insert title here</title>
+<script type="text/javascript">
+$(document).ready(function(){
+	//获得文本框对象
+	   
+	var t = $("#text_box");
+	//初始化数量为1,并失效减
+	$('#min').attr('disabled',true);
+	    //数量增加操作
+	    $("#add").click(function(){    
+	        //t.val(parseInt(t.val())+1)
+	        t.val(parseInt(t.val())+1);
+	        if (parseInt(t.val())!=0){
+	            $('#min').attr('disabled',false);
+	        }
+	      
+	    }) 
+	    //数量减少操作
+	    $("#min").click(function(){
+	        t.val(parseInt(t.val())-1);
+	        if (parseInt(t.val())==0){
+	            $('#min').attr('disabled',true);
+	        }
+	      
+	    })
+	   
+	});
+
+function showYue() {
+	$.ajax({
+		data : {},
+		type : "GET",
+		dataType : 'json',
+		url : "http://192.168.9.141:8080/sssm/userController/showYue.do",
+		error : function(data) {
+			alert("出错了！");
+		},
+		success : function(data) {
+			alert("success:查询余额成功");
+			$("#yue").html('您好，您帐号余额为：'+data.yue);
+		}
+	});
+}
+</script>
+
+
+<script>
+
+function order(){
+	//var arr = [];
+    if(goodList.length<1){
+    alert("您未添加任何商品！！");
+    return ;
+    }
+    
+	//$('input[name="goods"]:checked').each(function(){
+		//传值为数组，用一下
+		//arr.push($(this).val());
+		//传值为对象，用以下
+	//	var data={"goodname":($(this).val()),"goodprice":"","goodquanity":"","id":""};
+	//	arr.push(data);
+//	})
+//	alert(arr);
+	var jason=JSON.stringify(goodList);//数组转换成json
+	$.ajax({
+		data:jason,
+		traditional:true,
+			type:'POST',
+				dataType:'json',
+				contentType: 'application/json;charse=UTF-8',
+					url:'http://192.168.9.141:8080/sssm/userController/order.do',
+					success : function (data){
+						alert("success");
+						
+					},
+					error : function (data){
+						alert("fail");
+					}
+	})
+}
+</script>
+<script>
+function addCount(i){
+	var i=i+1;
+	var isClick=false;
+
+
+	//alert("3"+i);
+    selG=$("#goodT").children().eq(i).find("th:eq(0)").html();
+    selP=$("#goodT").children().eq(i).find("th:eq(1)").html();
+	$("#text_box").val(0);
+    $("#detailDiv").css("display","block");
+	
+	alert(selG);
+}
+
+goodList=new Array();  //商品名  单价  数量  总价
+//goodTotal="";
+//totalQ=0;
+//totalP=0;
+t=0;//控制是否第一次写入
+
+
+function addCount2(){
+	count = $("#text_box").val();
+	if(count==0){
+	$("#detailDiv").css("display","none");
+	return ;
+	}
+   // alert(arr[0][0]+arr[0][1]);
+   temp=(selP*count).toFixed(2);
+   var isRepeat=0;
+   var len;
+   if(goodList.length>=1)
+	   len=goodList.length;
+   else{
+	   len=1;
+	   
+   }
+   for(var i=0;i<len;i++){
+if(t==0){
+	alert("第一次插入");
+	goodList.push([selG,selP,count,temp]);
+	//qk=0;
+}
+ if(t!=0&&goodList[i][0]==selG){
+	// alert("t=="+t);
+	// alert("qk=="+qk);
+	 alert("找到重复");
+		   goodList[i][2]=parseInt(goodList[i][2])+parseInt(count);
+		   goodList[i][3]=(parseFloat(goodList[i][3])+parseFloat(temp)).toFixed(2);
+		   isRepeat=1;
+	   }
+	   if(t!=0&&isRepeat==0&&i==len-1) {
+		   alert("有插入");
+		   goodList.push([selG,selP,count,temp]);
+	   }
+   }
+   t++;
+   alert("t=="+t);
+
+  var goodTotal="<div id='resD'><table id='resT'><thead><th>已选择商品名称</th><th>单价</th><th>数量</th><th>总价</th></thead><tr>";
+  var totalQ=0;
+  var totalP=0;
+  
+ for(var i=0;i<goodList.length;i++){
+	 goodTotal=goodTotal+"<th>"+goodList[i][0]+"</th><th>"+goodList[i][1]+"</th><th>"+goodList[i][2]+"</th><th>"+goodList[i][3]+"</th><th>"+"<input type='button' value='del' onclick='cutCount("+i+");'/>'"+"</th></tr>";
+ }
+ goodTotal+="</table></div>";
+ alert(goodTotal);
+	$("#showGoodNP").html(goodTotal);
+	for(var i=0;i<goodList.length;i++){
+		totalQ=parseInt(totalQ)+parseInt(goodList[i][2]);
+	}
+	$("#totalQ").html("Total:"+totalQ);
+	for(var i=0;i<goodList.length;i++){
+	totalP=(parseFloat(totalP)+parseFloat(goodList[i][3])).toFixed(2);
+	}
+	$("#totalP").html("TotalPrice:"+totalP);
+	$("#detailDiv").css("display","none");
+}
+
+function cutCount(count){
+	goodList.splice(count,1);
+	
+	t=goodList.length >= 1 ? goodList.length : 0;
+	  var goodTotal="<div id='resD'><table id='resT'><thead><th>已选择商品名称</th><th>单价</th><th>数量</th><th>总价</th></thead><tr>";
+	  var totalQ=0;
+	  var totalP=0;
+	for(var i=0;i<goodList.length;i++)
+		{
+		 goodTotal=goodTotal+"<th>"+goodList[i][0]+"</th><th>"+goodList[i][1]+"</th><th>"+goodList[i][2]+"</th><th>"+goodList[i][3]+"</th><th>"+"<input type='button' value='del' onclick='cutCount("+i+");'/>'"+"</th></tr>";
+		}
+	goodTotal+="</table></div>";
+	$("#showGoodNP").html(goodTotal);
+	for(var i=0;i<goodList.length;i++){
+		totalQ=parseInt(totalQ)+parseInt(goodList[i][2]);
+	}
+	$("#totalQ").html("Total:"+totalQ);
+	for(var i=0;i<goodList.length;i++){
+	totalP=(parseFloat(totalP)+parseFloat(temp)).toFixed(2);
+	}
+	$("#totalP").html("TotalPrice:"+totalP);
+}
+//alert(str);
+/*	var jason = JSON.stringify(str);
+	$.ajax({	 
+	data:jason,
+	traditional:true,
+		type:'POST',
+			dataType:'json',
+			contentType: 'application/json;charse=UTF-8',
+				url:'http://192.168.9.141:8080/sssm/userController/order.do',
+				success : function (data){
+					alert("success"+data.msg);
+					
+				},
+				error : function (data){
+					alert("fail"+data.msg);
+				}
+})
+}*/
+
+function showGoods(){
+	$.ajax({
+		data:{},
+		type:'POST',
+			dataType:'json',
+				url:"http://192.168.9.141:8080/sssm/goodController/showGoods.do",
+				
+					success:function (data){
+	
+					    var res = "<form id='addGood'> <table id='goodT' border='1' style='width': '1000px', 'height': '15px''><thead><tr><th>商品名</th><th>价格</th></tr></thead>";
+					    for(var i=0; i<data.length; i++){
+					    	//res=res+data[i]+"<br>"
+					    	res=res+"<thead><tr><th>"+data[i][0]+"</th><th>"+data[i][1]+"</th>"+"<th><input type='button' class='button' value='Buy' onclick='addCount("+i+");'/></th>"+"</tr></thead>";
+					    	 //+ "<input id='min' name='' type='button' value='-' /> <input id='text_box' name='' type='text' value='0' style='width:30px;'/>  <input id='add' name='' type='button' value='+' /> "+"</th><th>" +"<input type='checkbox' name='goods' value='"+data[i][0]+"' /></th>"    
+					    }
+					    res=res + "</table></form>";
+					       $("#result").html(res);
+	//alert(res);
+					},
+				error:function (data){
+					alert("hello12");
+				}
+	})
+}
+
+function hide(){
+	$("#detailDiv").css("display","none");
+}
+</script>
+<style> #detailDiv {
+            width: 400px;
+            height: 200px;
+            background-color: aquamarine;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            margin: auto;
+        }
+        </style>
+</head>
+<body onload="showGoods();">
+	你好登陆成功                             <input type="button" value ='shang' onclick="window.open('http://192.168.9.141:8080/sssm/addGoods.html');">
+	<input type="submit" value="点击查询余额" onclick="showYue();">
+	<div id="yue"></div>
+	<form action="http://192.168.9.141:8080/sssm/userController/logOut.do">
+		<input type="submit" value="退出登录">
+	</form>
+	<!--<div>
+	 	<form id="addGood">
+			Espresso <input type='checkbox' name='Espresso' value='Espresso'checked='checked' /> <br />
+				 Cappuccino <input type="checkbox" name="Cappuccino" value="Cappuccino" /> <br />
+				  Coffee Latte<input type ="checkbox" name="CoffeeLatte" value="CoffeeLatte" /><br /> 
+				  Dry Martin <input type="checkbox" name="DryMartin" value="DryMartin" /> <br /> 
+				  Lafite(82) <input type="checkbox" name="Lafite" value="Lafite" /> <br /> <br /> 
+				  <input type="button" value ="order" onclick="order();" />
+		</form>
+		<table id= "goodTT" border="1" style="width: 50px; height: 15px;">
+		<thead>
+		<tr>
+		<th>2</th>
+		<th>2</th>
+		<th>2</th>
+		</tr></thead>
+		<thead><tr>
+		<td>12</td>
+		<td>12</td>
+		<td>12</td>
+		</tr></thead>
+		<thead><tr>
+		<td>22</td>
+		<td>22</td>
+		<td>22</td>
+		</tr></thead>
+		</table> 
+	//</div>
+	<br>
+	<form action="http://192.168.9.141:8080/sssm/goodController/test.do" method="get">
+	
+	<input type="submit" value="ceshi">
+	</form>
+	
+	<div ng-app=''>
+  <p>名字 : <input type="text" ng-model='name'></p>
+  <h5>Hello {{name}}</h5>
+</div> -->
+	<div id="result">
+	</div>
+<!-- 以下为Cart框 -->
+<div id="showGoodNP"></div><div id="showGoodQ"></div><div id="totalQ"></div><div id="totalP"></div>
+<!-- 以下为弹出框 -->
+<div id="detailDiv" style="display : none;" >
+<form name="detailF" style="margin : 0px; padding : 0px;"></form>
+<table border="1">
+<thead>
+<tr>
+<td>
+请输入您的购买量
+<input id="min" name="" type="button" value="-" />  
+<input id="text_box" name="" type="text" value="0"style="width:30px;"/>  
+<input id="add" name="" type="button" value="+" /> 
+</tr></thead>
+</table>
+<input type="button" id="confirmCount" value ="确定" onclick="addCount2();"/>  <input type ="button" value ="取消" onclick="hide();"/>
+</div>
+<input type='button' value='提交购买' onclick='order();' /> <br> 
+
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sy.dao.GoodMapper" >
+  <resultMap id="BaseResultMap" type="sy.model.Good" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goodquanity" property="goodquanity" jdbcType="INTEGER" />
+    <result column="goodprice" property="goodprice" jdbcType="DOUBLE" />
+    <result column="goodname" property="goodname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goodquanity, goodprice, goodname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from good1
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select
+  <include refid="Base_Column_List"/>
+  from good
+  where goodname =#{name,jdbcType=VARCHAR}
+  </select>
+  <select id="getAll" resultMap="BaseResultMap">
+  select * from good1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from good1
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="sy.model.Good" >
+    insert into good1 (id, goodquanity, goodprice, 
+      goodname)
+    values (#{id,jdbcType=INTEGER}, #{goodquanity,jdbcType=INTEGER}, #{goodprice,jdbcType=DOUBLE}, 
+      #{goodname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="sy.model.Good" >
+    insert into good1
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodquanity != null" >
+        goodquanity,
+      </if>
+      <if test="goodprice != null" >
+        goodprice,
+      </if>
+      <if test="goodname != null" >
+        goodname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodquanity != null" >
+        #{goodquanity,jdbcType=INTEGER},
+      </if>
+      <if test="goodprice != null" >
+        #{goodprice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodname != null" >
+        #{goodname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="sy.model.Good" >
+    update good1
+    <set >
+      <if test="goodquanity != null" >
+        goodquanity = #{goodquanity,jdbcType=INTEGER},
+      </if>
+      <if test="goodprice != null" >
+        goodprice = #{goodprice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodname != null" >
+        goodname = #{goodname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="sy.model.Good" >
+    update good1
+    set goodquanity = #{goodquanity,jdbcType=INTEGER},
+      goodprice = #{goodprice,jdbcType=DOUBLE},
+      goodname = #{goodname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

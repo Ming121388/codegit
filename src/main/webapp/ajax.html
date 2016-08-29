@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajax</title>
+	<meta charset="utf-8">
+	<script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+    <script>
+    $(function(){
+        var x = $('#x').val();
+        var y = $('#y').val();
+      //  console.log(x, y)
+        $('#btn1').click(function(){
+             $.ajax({
+                 url: 'userController/chuanZ.do',
+                 type: 'get',
+                 dataType: 'json',
+                 data: {'x':x,
+                    'y':y},
+             })
+             .done(function(data) {
+               // console.log(data)
+                 $('#result').val(data.z); 
+
+             })
+             .fail(function() {
+                 alert("error");
+             })
+             .always(function() {
+                 console.log("complete");
+             });
+        });
+    })
+	</script>
+</head>
+<body>
+<input type="text" name="x" id="x">
+<input type="text" name="y" id="y">
+<input type="text" name="result" id="result">
+<input type="button" name="btn" id="btn1" value="go!">
+</body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>慕课网电商</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/first.css">
+    <link rel="stylesheet" type="text/css" href="css/idangerous.swiper.css">
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
+	<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+    <script src=js/idangerous.swiper.min.js></script>
+    <style class="cp-pen-styles">
+*
+{
+margin:0px;
+padding:0px;
+}
+                             
+#loginform
+{
+    display: none;
+width:550px;
+height:auto;
+position:absolute;
+margin-left: -275px;
+margin-top:100px;
+left: 50%;
+top:20%;
+z-index: 999;
+}
+
+#loginform input
+{
+display:block;
+margin:0px auto 15px;
+border-radius:5px;
+background: #333333;
+width:85%;
+padding:12px 20px 12px 10px;
+border:none;
+color:#929999;                       
+box-shadow:inset 0px 1px 5px #272727;
+font-size:0.8em;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease; 
+}
+
+#loginform input:focus
+{
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;  
+box-shadow: 0px 0px 5px 1px #161718;
+}
+
+#loginform button
+{
+background: #ff5f32;
+border-radius:50%;
+border:10px solid #222526;
+font-size:0.9em;
+color:#fff;
+font-weight:bold;
+cursor:pointer;
+width:85px;
+height:85px;
+position:absolute;
+right: -42px;
+top: 54px;
+text-align:center;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+
+#loginform button:hover
+{
+background:#222526;
+border-color:#ff5f32;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+
+#loginform button i
+{
+font-size:20px;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+
+#loginform button:hover i
+{
+color:#ff5f32;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+  
+*:focus{outline:none;}
+::-webkit-input-placeholder {
+color:#929999;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+color:#929999; 
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+color:#929999;  
+}
+
+:-ms-input-placeholder {  
+color:#929999; 
+}
+
+#loginform h1
+{
+text-align:center;
+color:#fff;
+font-size:13px;
+padding:12px 0px;
+}
+
+#note
+{
+color:#88887a;
+font-size: 0.8em;
+text-align:left;
+padding-left:5px;
+}
+
+#facebook
+{
+text-align:center;
+float:left;
+background:#1d7ad9;
+padding:35px 10px 20px 10px;
+width:170px;
+height:135px; 
+border-radius:3px;
+cursor:pointer;
+box-shadow: 0px 0px 10px 2px #161718; 
+margin-right:10px;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+
+#facebook:hover
+{
+box-shadow: 0px 0px 0px 0px #161718;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+
+.fa-facebook
+{
+color:#fff;
+font-size:7em;
+display:block;
+}
+
+a
+{
+color:#88887a;
+text-decoration:none;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+
+#loginform a:hover
+{
+color:#fff;
+margin-left:5px;
+-webkit-transition:0.5s ease;
+-moz-transition:0.5s ease;
+-o-transition:0.5s ease;
+-ms-transition:0.5s ease;
+transition:0.5s ease;
+}
+
+#mainlogin
+{
+float:left;
+width:250px;
+height:170px;
+padding:10px 15px;
+position:relative;
+background:#555555;
+border-radius:3px;
+}
+
+#connect
+{
+font-weight: bold;
+color: #fff;
+font-size: 13px;
+text-align: left;
+font-family: verdana;
+padding-top:10px;
+}
+
+#or
+{
+position:absolute;
+left: -25px;
+top: 10px;
+background:#222222;
+text-shadow:0 2px 0px #121212;
+color:#999999;
+width:40px;
+height:40px;
+text-align:center;
+border-radius:50%;
+font-weight:bold;
+line-height:38px;
+font-size: 13px;
+}
+</style>
+    <script>
+
+	$(function(){
+       var name = $('.textinput').val();
+		$('#submit2').click(function() {
+			/* Act on the event */
+            console.log("aaa")
+            console.log($('#name2').val())
+
+      $.ajax({
+				
+				data: {name:$("#name2").val(),psw:$("#password2").val()},
+				type: 'GET',
+				dataType: 'json',
+				url: 'http://192.168.9.141:8080/sssm/userController/login.do',
+				//data: {name: "$('#name2').val()",
+                 //      psw:"$('#password2').val()"},
+			})
+			
+		});
+
+		$('.colorbutton').each(function(){
+			$(this).click(function() {
+				/* Act on the event */
+				$('.colorbutton').css('background-color', '#fff');
+				$(this).css('background-color','#ccc');
+                $('#colorname').html($(this).val());
+			});
+		})
+        $('.guigebutton').each(function(){
+            $(this).click(function() {
+                /* Act on the event */
+                $('.guigebutton').css('background-color', '#fff');
+                $('.guigebutton_longer').css('background-color', '#fff');
+                $(this).css('background-color','#ccc');
+                console.log($(this).val());
+                $('#guigename').html($(this).val());
+            });
+        })
+        $('.guigebutton_longer').each(function(){
+            $(this).click(function() {
+                /* Act on the event */
+                $('.guigebutton_longer').css('background-color', '#fff');
+                $('.guigebutton').css('background-color', '#fff');
+                $(this).css('background-color','#ccc');
+                console.log($(this).val());
+                $('#guigename').html($(this).val());
+            });
+        })
+		$('#minus').click(function() {
+			/* Act on the event */
+			//var text2 = $('.text2').val();
+            if ($('.text2').val()>0) {
+			$('.text2').val(parseInt($('.text2').val())-1);
+			}
+			else{
+				$('.text2').val(0);
+			}
+		});
+		$('#addup').click(function() {
+			/* Act on the event */
+			//var text2 = $('.text2').val();
+            // if ($('.text2').val()>0) {
+			$('.text2').val(parseInt($('.text2').val())+1);
+			})
+        $('.detail_mainbody_left_bottom img').click(function() {
+            /* Act on the event */
+            $('.detail_mainbody_left_top img').attr('src',$(this).attr('src'));
+        });
+         $('.detail_mainbody_2_right_header').hide();
+         $('#detail_mainbody_2_right_header_button1').css({
+             'background-color': '#1d7ad9',
+             'color': '#fff'
+         });
+         $('#detail_mainbody_2_right_header_button2').css({
+             'background-color': '#f1f1f1',
+             'color': '#000'
+         });
+         $('#detail_mainbody_2_right_header_button2').css('color','#000')
+
+         $('#detail_mainbody_2_right_header_button1').click(function() {
+             /* Act on the event */
+         $('#detail_mainbody_2_right_header_button1').css({
+             'background-color': '#1d7ad9',
+             'color': '#fff'
+         });
+            $('#detail_mainbody_2_right_header_button1').siblings().css({
+             'background-color': '#f1f1f1',
+             'color': '#000'
+         });
+             $('.headerreplace').show();
+             $('.detail_mainbody_2_right_header').hide();
+         });
+         $('#detail_mainbody_2_right_header_button2').click(function() {
+             /* Act on the event */
+             $('#detail_mainbody_2_right_header_button2').css({
+             'background-color': '#1d7ad9',
+             'color': '#fff'
+         });
+             $('#detail_mainbody_2_right_header_button2').siblings().css({
+             'background-color': '#f1f1f1',
+             'color': '#000'
+         });
+             $('.headerreplace').hide();
+             $('.detail_mainbody_2_right_header').show();
+         });
+
+         $('.detail_mainbody_2_right_customerfeekback_excellent').hide();
+         $('.detail_mainbody_2_right_customerfeekback_good').hide();
+         $('.detail_mainbody_2_right_customerfeekback_poor').hide();
+         $('.detail_mainbody_2_right_customerfeekback_total').show();
+		
+         $('#total_comment').click(function() {
+             /* Act on the event */
+         $('.detail_mainbody_2_right_customerfeekback_excellent').hide();
+         $('.detail_mainbody_2_right_customerfeekback_good').hide();
+         $('.detail_mainbody_2_right_customerfeekback_poor').hide();
+         $('.detail_mainbody_2_right_customerfeekback_total').show();
+         });
+         $('#excellent_comment').click(function() {
+             /* Act on the event */
+         $('.detail_mainbody_2_right_customerfeekback_excellent').show();
+         $('.detail_mainbody_2_right_customerfeekback_good').hide();
+         $('.detail_mainbody_2_right_customerfeekback_poor').hide();
+         $('.detail_mainbody_2_right_customerfeekback_total').hide();
+         });
+         $('#good_comment').click(function() {
+             /* Act on the event */
+         $('.detail_mainbody_2_right_customerfeekback_excellent').hide();
+         $('.detail_mainbody_2_right_customerfeekback_good').show();
+         $('.detail_mainbody_2_right_customerfeekback_poor').hide();
+         $('.detail_mainbody_2_right_customerfeekback_total').hide();
+         });
+         $('#poor_comment').click(function() {
+             /* Act on the event */
+         $('.detail_mainbody_2_right_customerfeekback_excellent').hide();
+         $('.detail_mainbody_2_right_customerfeekback_good').hide();
+         $('.detail_mainbody_2_right_customerfeekback_poor').show();
+         $('.detail_mainbody_2_right_customerfeekback_total').hide();
+         });
+
+         $('#add_chart').click(function() {
+             /* Act on the event */
+             if ($('#colorname').html()!='' && $('#guigename').html()!='') {
+                $('.chartnum').html( $('.text2').val());
+             }
+             else if ($('#colorname').html()=='') {
+                $('#colorerror').html('请先选择颜色')
+             }
+             else if ($('#guigename').html()=='') {
+                $('#guigeerror').html('请先选择规格')
+             }
+         });
+         $('#forlogin').click(function() {
+             /* Act on the event */
+             $('#loginform').toggle();
+         });
+        });
+
+	
+	</script>
+</head>
+<body>
+<div class="header">
+	<div class="top">
+		<div class="save">
+			收藏慕课
+		</div>
+		<div class="login">
+			欢迎来到慕课网！
+			<a href="javascript:;" id="forlogin">[登录]</a>
+			<a href="javascript:;">[免费注册]</a>
+		</div>
+	</div>
+	<div class="middle">
+		<div class="logo">
+			<a href="" ><img src="images/logo.jpg" alt="慕课网"></a>
+		</div>
+		<div class="searchbox">
+			<input type="text" class="textinput">
+			<input type="button" class="btn" value="搜索">
+		</div>
+		<div class="chart">
+			<div class="chartcar">
+				购物车
+			</div>
+			<div class="chartnum">
+				0
+			</div>
+		</div>
+	</div>
+	</div>
+<div id="loginform">
+<div id="facebook">
+    <i class="fa fa-facebook"></i>
+        <div id="connect">Connect to Mukewang
+        </div>
+</div>
+<div id="mainlogin">
+<div id="or">or</div>
+<h1>Log in to buy something</h1>
+<form action="http://192.168.9.141:8080/sssm/userController/login.do">
+<input type="text" placeholder="username or email" value="" required id="name2">
+<input type="password" placeholder="password" value="" required id="password2">
+<button type="button"><i class="fa fa-arrow-right" id="submit2"></i></button>
+</form>
+<div id="note"><a href="#">Forgot your password?</a></div>
+</div>
+</div>
+    <div class="navigator">
+        <div class="navigator_font">
+    	<a href=""> 首页</a>
+    	<b> ></b>
+    	<a href="">平板电脑</a>
+    	<b> ></b>
+    	<a href="">平板电脑</a>
+    	<b> ></b>
+    	<a href="">Apple 苹果</a>
+    	<b> ></b>
+    	<a href="">MD531CH/A</a>
+    	</div>
+    </div>
+    <div class="detail_mainbody">
+    	<div class="detail_mainbody_left">
+    	<div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="images/IMG_0707.JPG">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/IMG_0730.JPG">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/IMG_0856.PNG">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/IMG_0708.JPG">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/des_big.jpg">
+            </div>
+        </div>
+        </div>
+    		<div class="detail_mainbody_left_bottom">
+    			<img src="./images/IMG_0707.JPG" height="54px" width="54px" >
+    			<img src="images/IMG_0730.JPG" height="54px" width="54px">
+    			<img src="images/IMG_0856.PNG" height="54px" width="54px">
+    			<img src="images/IMG_0708.JPG" height="54px" width="54px">
+    			<img src="images/des_big.jpg" height="54px" width="54px">
+    		</div>
+    	</div>
+    	<div class="detail_mainbody_right">
+    		<div class="detail_mainbody_right_topic">
+    			全网底价 Apple 苹果 iPad mini 16G wifi版 平板电脑 前白后银 MD531CH/A 银白两色生产批次不同混合发货
+    		</div>
+    		<div class="detail_mainbody_right_price">
+    			<div class="detail_mainbody_right_lowertopic">慕课价</div>
+    			<div class="detail_mainbody_right_price2">￥1999.00</div>
+    		</div>
+    		<div class="detail_mainbody_right_discount">
+    			<div class="detail_mainbody_right_lowertopic">优惠</div>
+    			<div class="detail_mainbody_right_discount_detail">购ipad加价优惠够配件或USB充电插座</div>
+    		</div>
+    		<div class="detail_mainbody_right_location">
+    			<div class="detail_mainbody_right_lowertopic">送到</div>
+    			<div class="detail_mainbody_right_location_location">
+    				<select>
+    					<option value="佛山市南海区">佛山市南海区</option>
+    					<option value="佛山市禅城区">佛山市禅城区</option>
+    					<option value="佛山市顺德区">佛山市顺德区</option>
+    				</select>有货，可当日出库
+                    
+    			</div>
+    		</div>
+    		<div class="detail_mainbody_right_color">
+    			<div class="detail_mainbody_right_lowertopic">选择颜色</div>
+    			<div class="detail_mainbody_right_colorchoose">
+    				<input type="button" name="" value="白色" class="colorbutton">
+    				<input type="button" name="" value="黑色" class="colorbutton">
+    				<input type="button" name="" value="灰色" class="colorbutton">
+                    <span id="colorerror"></span>
+    			</div>
+    		</div>
+    		<div class="detail_mainbody_right_guige">
+    			<div class="detail_mainbody_right_lowertopic" id="special_topic">选择规格</div>
+                <div class="detail_mainbody_right_guigechoose">
+    				<input type="button" name="" value="WIFI 16G" class="guigebutton">
+    				<input type="button" name="" value="WIFI 32G" class="guigebutton">
+    				<input type="button" name="" value="WIFI 64G" class="guigebutton">
+    				<input type="button" name="" value="WIFI Cellular 16G" class="guigebutton_longer">
+    				<input type="button" name="" value="WIFI Cellular 32G" class="guigebutton_longer"><br>
+    				<input type="button" name="" value="WIFI Cellular 64G" class="guigebutton_longer" id="special_guigebutton">
+                    <span id="guigeerror"></span>
+    		</div>
+    		</div>
+    		<div class="detail_mainbody_right_number">
+    			<div class="detail_mainbody_right_lowertopic">数量</div>
+    			<div class="detail_mainbody_right_numberchoose">
+    				<div id="number_span">
+    					<!-- <input type="button" name="" value="-" class="btn2" id="minus"> -->
+    					<button class="btn2" id="minus">-</button>
+    					<input type="text" name="" value="1" class="text2">
+    					<button class="btn2" id="addup">+</button>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="chosen">
+    			已选择
+    			<span id="colorname"></span>|
+    			<span id="guigename"></span>
+    		</div>
+    		<div class="buyandaddchart">
+    			<button class="btn3" id="add_chart">加入购物车</button>
+    			<button class="btn3">立即购买</button>
+    		</div>
+    	    <div class="warning">
+    	    	注意：此商品可提供普通发票，不提供增值税发票。
+    	    </div>
+    </div>
+    <div class="detail_mainbody_2">
+    	<div class="detail_mainbody_2_left">
+    		<div class="detail_mainbody_2_left_same">
+    			<div class="detail_mainbody_2_left_topic">
+    				&nbsp同价位
+    			</div>
+    			<div class="detail_mainbody_2_left_mainbody">
+    				<div>
+    					<div>
+    						<img src="./images/20160802154526.jpg">
+                        </div>
+                        <div>
+                        	<li class="detail_mainbody_2_left_mainbody_detail">Samsung 三星 GALAXY Tab 3 8.0 WLAN版本 T310平板电话</li>
+                            <li class="detail_mainbody_2_left_mainbody_price">¥3588.00</li>
+                        </div>
+    				</div>
+    			</div>
+    			<div class="detail_mainbody_2_left_mainbody">
+    				<div>
+    					<div>
+    						<img src="./images/20160802154526.jpg">
+                        </div>
+                        <div>
+                        	<li class="detail_mainbody_2_left_mainbody_detail">Samsung 三星 GALAXY Tab 3 8.0 WLAN版本 T310平板电话</li>
+                            <li class="detail_mainbody_2_left_mainbody_price">¥3588.00</li>
+                        </div>
+    				</div>
+    			</div>
+    			<div class="detail_mainbody_2_left_mainbody">
+    				<div>
+    					<div>
+    						<img src="./images/20160802154526.jpg">
+                        </div>
+                        <div>
+                        	<li class="detail_mainbody_2_left_mainbody_detail">Samsung 三星 GALAXY Tab 3 8.0 WLAN版本 T310平板电话</li>
+                            <li class="detail_mainbody_2_left_mainbody_price">¥3588.00</li>
+                        </div>
+    				</div>
+    			</div>
+    			<div class="detail_mainbody_2_left_mainbody">
+    				<div>
+    					<div>
+    						<img src="./images/20160802154526.jpg">
+                        </div>
+                        <div>
+                        	<li class="detail_mainbody_2_left_mainbody_detail">Samsung 三星 GALAXY Tab 3 8.0 WLAN版本 T310平板电话</li>
+                            <li class="detail_mainbody_2_left_mainbody_price" id="detail_mainbody_2_left_mainbody_end">¥3588.00</li>
+                        </div>
+    				</div>
+    			</div>
+    		</div class="detail_mainbody_2_left_final">
+    		<div class="detail_mainbody_2_left_topic">
+    				&nbsp看了最终买
+    		</div>
+            <div class="detail_mainbody_2_left_mainbody">
+    				<div>
+    					<div>
+    						<img src="./images/20160802154526.jpg">
+                        </div>
+                        <div>
+                        	<li class="detail_mainbody_2_left_mainbody_detail">Samsung 三星 GALAXY Tab 3 8.0 WLAN版本 T310平板电话</li>
+                            <li class="detail_mainbody_2_left_mainbody_price">¥3588.00</li>
+                        </div>
+    				</div>
+    			</div>
+    			<div class="detail_mainbody_2_left_mainbody">
+    				<div>
+    					<div>
+    						<img src="./images/20160802154526.jpg">
+                        </div>
+                        <div>
+                        	<li class="detail_mainbody_2_left_mainbody_detail">Samsung 三星 GALAXY Tab 3 8.0 WLAN版本 T310平板电话</li>
+                            <li class="detail_mainbody_2_left_mainbody_price">¥3588.00</li>
+                        </div>
+    				</div>
+    			</div>
+    			<div class="detail_mainbody_2_left_mainbody">
+    				<div>
+    					<div>
+    						<img src="./images/20160802154526.jpg">
+                        </div>
+                        <div>
+                        	<li class="detail_mainbody_2_left_mainbody_detail">Samsung 三星 GALAXY Tab 3 8.0 WLAN版本 T310平板电话</li>
+                            <li class="detail_mainbody_2_left_mainbody_price">¥3588.00</li>
+                        </div>
+    				</div>
+    			</div>
+    	</div>
+    	<div class="detail_mainbody_2_right">
+    	<div class="detail_mainbody_2_right_top">
+            <div id="detail_mainbody_2_right_header_button1">
+                    产品介绍
+                </div>
+                <div id="detail_mainbody_2_right_header_button2">
+                    商品评价
+                </div>
+    		<div class="detail_mainbody_2_right_header">
+    		<div class="detail_mainbody_2_right_comment">
+    			<div class="detail_mainbody_2_right_comment_detail">
+    				&nbsp商品评价
+    			</div>
+    			<div class="detail_mainbody_2_right_comment_score">
+    				<div class="detail_mainbody_2_right_comment_score_left">
+    					<li id="detail_mainbody_2_right_comment_score_score">3.7</li>
+    					<li id="detail_mainbody_2_right_comment_score_fen">分</li>
+    				</div>
+    				<div class="detail_mainbody_2_right_comment_score_right">
+    					<div class="detail_mainbody_2_right_comment_score_right_comment">
+    						<li>非常不满意</li>
+    						<li>不满意</li>
+    						<li>一般</li>
+    						<li>满意</li>
+    						<li>非常满意</li>
+    					</div>
+    					<div class="detail_mainbody_2_right_commentnumber">共18939位慕课网友参与评分</div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="detail_mainbody_2_right_commentstatus">
+    			<li id="total_comment">全部</li>
+    			<li id="excellent_comment">满意</li>
+    			<li id="good_comment">一般</li>
+    			<li id="poor_comment">不满意</li>
+    			<li id="comment_floatright">时间排序</li>
+    		    <li id="comment_floatright">推荐排序</li>
+    		</div>
+            <div class="detail_mainbody_2_right_customerfeekback_total">
+    		<div class="detail_mainbody_2_right_customerfeekback">
+    			<div class="customerpic">
+    				<img src="./images/IMG_0707.JPG">
+    				<li>61***42</li>
+    				<li>黄色会员</li>
+    			</div>
+    			<div class="detail_mainbody_2_right_customerfeekback2">
+    				<div class="detail_mainbody_2_right_customerfeekback2_rate">
+    					<img src="./images/icon/collection.jpg">
+    					<img src="./images/icon/collection.jpg">
+    					<img src="./images/icon/collection.jpg">
+    					<img src="./images/icon/collection.jpg">
+    					<img src="./images/icon/collection.jpg">
+    					<b>5分 满意</b>
+    				</div>
+    				<div class="detail_mainbody_2_right_customerfeekback2_comment">
+    					挺不错的，信赖慕课
+    				</div>
+    				<div class="detail_mainbody_2_right_customerfeekback2_comment">
+    					踩（0） 顶（0）
+    				</div>
+    			</div>
+    		</div>
+            <div class="detail_mainbody_2_right_customerfeekback">
+    			<div class="customerpic">
+    				<img src="./images/IMG_0707.JPG">
+    				<li>61***42</li>
+    				<li>黄色会员</li>
+    			</div>
+    			<div class="detail_mainbody_2_right_customerfeekback2">
+    				<div class="detail_mainbody_2_right_customerfeekback2_rate">
+    					<img src="./images/icon/collection.jpg">
+    					<img src="./images/icon/collection.jpg">
+    					<img src="./images/icon/collection.jpg">
+    					<b>3分 一般</b>
+    				</div>
+    				<div class="detail_mainbody_2_right_customerfeekback2_comment">
+    					一般般
+    				</div>
+    				<div class="detail_mainbody_2_right_customerfeekback2_comment">
+    					踩（0） 顶（0）
+    				</div>
+    			</div>
+            </div>
+            <div class="detail_mainbody_2_right_customerfeekback">
+                <div class="customerpic">
+                    <img src="./images/IMG_0707.JPG">
+                    <li>61***42</li>
+                    <li>黄色会员</li>
+                </div>
+                <div class="detail_mainbody_2_right_customerfeekback2">
+                    <div class="detail_mainbody_2_right_customerfeekback2_rate">
+                        <img src="./images/icon/collection.jpg">
+                        <b>1分 不满意</b>
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        质量不好
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        踩（0） 顶（0）
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="detail_mainbody_2_right_customerfeekback_excellent">
+                <div class="detail_mainbody_2_right_customerfeekback">
+                <div class="customerpic">
+                    <img src="./images/IMG_0707.JPG">
+                    <li>61***42</li>
+                    <li>黄色会员</li>
+                </div>
+                <div class="detail_mainbody_2_right_customerfeekback2">
+                    <div class="detail_mainbody_2_right_customerfeekback2_rate">
+                        <img src="./images/icon/collection.jpg">
+                        <img src="./images/icon/collection.jpg">
+                        <img src="./images/icon/collection.jpg">
+                        <img src="./images/icon/collection.jpg">
+                        <img src="./images/icon/collection.jpg">
+                        <b>5分 满意</b>
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        挺不错的，信赖慕课
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        踩（0） 顶（0）
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="detail_mainbody_2_right_customerfeekback_good">
+                <div class="detail_mainbody_2_right_customerfeekback">
+                <div class="customerpic">
+                    <img src="./images/IMG_0707.JPG">
+                    <li>61***42</li>
+                    <li>黄色会员</li>
+                </div>
+                <div class="detail_mainbody_2_right_customerfeekback2">
+                    <div class="detail_mainbody_2_right_customerfeekback2_rate">
+                        <img src="./images/icon/collection.jpg">
+                        <img src="./images/icon/collection.jpg">
+                        <img src="./images/icon/collection.jpg">
+                        <b>3分 一般</b>
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        挺不错的，信赖慕课
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        踩（0） 顶（0）
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="detail_mainbody_2_right_customerfeekback_poor">
+                <div class="detail_mainbody_2_right_customerfeekback">
+                <div class="customerpic">
+                    <img src="./images/IMG_0707.JPG">
+                    <li>61***42</li>
+                    <li>黄色会员</li>
+                </div>
+                <div class="detail_mainbody_2_right_customerfeekback2">
+                    <div class="detail_mainbody_2_right_customerfeekback2_rate">
+                        <img src="./images/icon/collection.jpg">
+                        <b>1分 不满意</b>
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        书本质量不行
+                    </div>
+                    <div class="detail_mainbody_2_right_customerfeekback2_comment">
+                        踩（0） 顶（0）
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="headerreplace"><img src="./images/IMG_0707.JPG"></div>
+    		</div>
+    	<div class="detail_mainbody_2_right_down">
+    		<div class="detail_mainbody_2_right_down_header">
+    			<div class="detail_mainbody_2_right_down_header_left">
+    				全部咨询（705）
+    			</div>
+    			<div  class="detail_mainbody_2_right_down_header_right">
+    				发表咨询
+    			</div>
+    		</div>
+    		<div class="detail_mainbody_2_right_down_remind">
+    			<p>提示:因厂家更改产品包装、产地或者更换随机附件等没有任何提前通知，且每位咨询者购买情况、提问时间等不同，为此以下回复信息仅供参考！若由此给您带来不便请多多谅解，谢谢！</p>
+    		</div>
+    		<div class="detail_mainbody_2_right_customerfeekback">
+    			<div class="customerpic">
+    				<img src="./images/IMG_0707.JPG">
+    				<li>61***42</li>
+    				<li>黄色会员</li>
+    			</div>
+    			<div class="detail_mainbody_2_right_customerfeekback2">
+    				<div class="detail_mainbody_2_right_customerfeekback2_rate">
+    					<b>商品咨询</b>
+    				</div>
+    				<div class="detail_mainbody_2_right_customerfeekback2_comment">
+    					可以便宜点吗？
+    				</div>
+    				<div class="detail_mainbody_2_right_down_kefu">
+    					慕课网客服回复：不行。
+    				</div>
+    			</div>
+    		</div>
+    		<div class="detail_mainbody_2_right_customerfeekback">
+    			<div class="customerpic">
+    				<img src="./images/IMG_0707.JPG">
+    				<li>61***42</li>
+    				<li>黄色会员</li>
+    			</div>
+    			<div class="detail_mainbody_2_right_customerfeekback2">
+    				<div class="detail_mainbody_2_right_customerfeekback2_rate">
+    					<b>商品咨询</b>
+    				</div>
+    				<div class="detail_mainbody_2_right_customerfeekback2_comment">
+    					这本书不好看
+    				</div>
+    				<div class="detail_mainbody_2_right_down_kefu">
+    					慕课网客服回复：哦。
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    	</div>
+    	
+    </div>
+</body>
+<script> 
+var mySwiper = new Swiper('.swiper-container',{
+autoplay : 500,//可选选项，自动滑动
+loop : true,//可选选项，开启循环
+})
+</script>
+
+</html>

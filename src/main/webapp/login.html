@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+	function ajaxTest() {
+		var i;
+		if($("#name").val()=="")
+			alert("Please Enter Your Username!");
+		if($("#psw").val()=="")
+			alert("Please Enter Your Password!");
+		else
+		$.ajax({
+			data : {name:$("#name").val(),psw:$("#psw").val()},
+			type : "GET",
+			dataType : 'JSON',
+			url : 'http://192.168.9.141:8080/sssm/userController/login.do',
+			error : function(data) {
+				alert("出错了！！:" + data.msg);
+			},
+			success : function(data) {
+				alert(data.msg);
+				$("#result").html(data.msgs);
+				i = data.hide;
+				if(i=="1")
+					document.getElementById("loginD").style.display="none";
+				//$("#loginD").hide();
+				//var openWindow=window.open("showUser.html");
+				//openWindow.document.body.innerHTML="123";
+			}
+		});
+	}
+	function KeyLogin(event){
+		var event=event||window.event;
+      if(event.keyCode==13)
+		loginBotton.click();
+	}
+</script>
+</head>
+<body>
+
+	<div id="loginD">请登录：<br>username:<input type="text" name="name" id="name" /><br>
+	password:<input type="password" name="psw123" id="psw" onkeypress="KeyLogin(event);" /><br>
+	<input type="submit" value="登录" id="loginBotton" onclick="ajaxTest();" /><br>
+	</div>
+	<div style=font-size:50px id="result"></div>
+
+</body>
+</html>
