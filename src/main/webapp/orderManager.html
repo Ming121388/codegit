@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+<script src="js/public.js"></script>
+<!-- 包含头部信息用于适应不同设备 -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 包含 bootstrap 样式表 -->
+<link rel="stylesheet"
+	href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+<title>Insert title here</title>
+<script type="text/javascript">
+//$("#showOB").click(function(){
+	$(function(){
+	showOrder();	
+	});
+	
+	function showOrder(){
+	var li="";
+	$.ajax({
+		data:'',
+		type:'GET',
+		dataType:'json',
+		url:localUrl+'/sssm/adminController/showOrderList.do',
+		success:function(data){   
+		    console.log("调用showOrderList");
+		    res="";
+			console.log(data.li);
+			
+			$.each(data.li,function(key,values){				
+			console.log(values.orderIscomplete);
+			
+			if(values.orderIscomplete==0){
+				isComplete="未完成";
+			    var orderId= values.orderId;
+			res+=orderId+" "+values.orderBuyer+" "+isComplete+"<input id='listB"+key+"' type='button' value='展开' onclick='showDetail("+orderId+")'/><div id='detail"+orderId+"' style='display:none'></div><br>";
+			}	
+			})
+
+			$("#orderList").html(res);			
+		},
+		error:function(data){
+			alert("error");
+		}
+	});
+	
+}
+	function showDetail(orderId){
+		console.log(" orderId=>"+orderId);
+		$.ajax({
+		data:{orderId:orderId},
+			type:'GET',
+				dataType:'json',
+					url:localUrl+'/sssm/adminController/showDetail.do',
+					success:function(data){
+						console.log("success");
+						res1="";
+						var isComplete="";
+						$.each(data.de,function(key,values){
+							if(values.detailIsComplete=="1")
+								isComplete="已完成";
+								else
+									if(values.detailIsCancel=="1"){
+									isComplete="已取消";
+									$('input[id$='+value.detailId+']').css("display","none");
+									}
+									else 
+										isComplete="未完成";
+						var completeB="1"+values.detailId;
+						var cancelB="2"+values.detailId;
+							res1+=values.orderId+" "+values.detailId+" "+values.detailGoodName+" "+values.detailGoodQuantity+" "+isComplete+"<input type='button' value='完成' id='"+completeB+"' onclick='completeDetail("+completeB+");'> <input type='button' value='取消' onclick='completeDetail("+cancelB+");'> <br>";
+						
+							})
+						    detail="#detail"+orderId;
+							$(detail).html(res1).toggle(250);
+						
+					},
+					error:function(data){
+						console.log("error");
+					}
+									
+		});
+		}
+	
+	function completeDetail(i){
+ 
+		var detailId=i.toString();
+
+	var r=confirm("是否确定完成？");
+	$.ajax({
+		data:{detailId:detailId},
+		dataType:'json',
+		type:'GET',
+		url:localUrl+'/sssm/adminController/operateDetail.do',
+		success:function(data){
+			alert("ok");
+			},
+			error:function(data){
+				alert("no");
+			}
+	
+	});
+
+		r==true? $("#"+i).css("display","none"):null;
+		//$("#"+i)[0].style.display="none";
+		//document.getElementById("201608301529390").style.display="none";
+	}
+	//$(document).ready(function(){
+	//	  $("button").click(function(){
+	//	    $("p").slideToggle();
+	//	  });
+	//	});
+
+
+
+</script>
+</head>
+<body>
+<input type="button" id="showOB" onclick="showOrder();"/>
+
+<div id="orderList"></div>
+
+</body>
+</html>

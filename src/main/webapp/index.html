@@ -5,13 +5,14 @@
 <title>Insert title here</title>
 <script type="text/javascript"
 	src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="js/public.js"></script>
 <script type="text/javascript">
 	function ajaxTest() {
 		$.ajax({
 			data : {name:$("#name").val(),psw:$("#psw").val()},
 			type : "GET",
 			dataType : 'json',
-			url : "http://192.168.9.141:8080/sssm/userController/zhuCe.do",
+			url : localUrl+"/sssm/userController/zhuCe.do",
 			error : function(data) {
 				alert("出错了！！:" + data.msg);
 			},
@@ -20,6 +21,7 @@
 				$("#result").html(data.msg);
 			}
 		});
+		alert(url);
 	}
 	</script>
 </head>

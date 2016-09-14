@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="js/public.js"></script>
 <script type="text/javascript">
 	function ajaxTest() {
 		var i;
@@ -14,15 +15,15 @@
 		else
 		$.ajax({
 			data : {name:$("#name").val(),psw:$("#psw").val()},
-			type : "GET",
+			type : "post",
 			dataType : 'JSON',
-			url : 'http://192.168.9.141:8080/sssm/userController/login.do',
+			url : localUrl+'/sssm/userController/login.do',
 			error : function(data) {
 				alert("出错了！！:" + data.msg);
 			},
 			success : function(data) {
 				alert(data.msg);
-				$("#result").html(data.msgs);
+				$("#result").html(data.msg+"<a href='"+localUrl+"/sssm/showUser.html'>去操作</a>");
 				i = data.hide;
 				if(i=="1")
 					document.getElementById("loginD").style.display="none";

@@ -1,6 +1,10 @@
 package sy.controller;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +25,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sy.model.Detail;
 import sy.model.Good;
+import sy.model.Order;
 import sy.model.User;
 import sy.service.GoodServiceI;
+import sy.service.OrderServiceI;
 import sy.service.UserServiceI;
 import sy.service.UserServiceImpl;
 
@@ -31,7 +39,15 @@ import sy.service.UserServiceImpl;
 public class UserController {
 	private UserServiceI userService;
 	private GoodServiceI goodService;
+	private OrderServiceI orderService;
 
+	public OrderServiceI getOrderService() {
+		return orderService;
+	}
+	@Autowired
+	public void setOrderService(OrderServiceI orderService) {
+		this.orderService = orderService;
+	}
 	public GoodServiceI getGoodService() {
 		return goodService;
 	}
@@ -75,9 +91,9 @@ public class UserController {
 	public @ResponseBody Map<String, Object> login(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 		// System.out.println(request.getParameter("name"));
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Headers",
-				"Origin, X-Requested-With, Content-Type, Accept");
+//		response.addHeader("Access-Control-Allow-Origin", "*");
+//		response.addHeader("Access-Control-Allow-Headers",
+//				"Origin, X-Requested-With, Content-Type, Accept");
 		System.out.println("11111");
 		User u = new User();
 		int i = 0;
@@ -107,7 +123,7 @@ public class UserController {
 		if (i == 1) {
 			map.put("name", u.getName());
 			map.put("msg", "登录成功");
-			map.put("msgs", "登录成功" + "<a href='http://192.168.9.141:8080/sssm/showUser.html'>去操作</a>");
+		//	map.put("msgs", "登录成功" + "<a href="+localUrl+"/sssm/showUser.html'>去操作</a>");
 			map.put("hide", "1");
 			session.setAttribute("name", u.getName());
 			System.out.println("session 插入"+u.getName());
@@ -140,6 +156,9 @@ public class UserController {
 		User u = new User();
 		boolean temp = false;
 		List<User> lists = userService.getAll();
+		
+		//System.out.println(u.getName());
+		
 		Iterator<User> it = lists.iterator();
 		while (it.hasNext()) {
 			u = (User) it.next();
@@ -159,7 +178,6 @@ public class UserController {
 			map.put("msg", "用户名存在，注册失败");
 			return map;
 		}
-
 	}
 
 	@RequestMapping("/chuanZ")
@@ -203,11 +221,46 @@ public class UserController {
 	@RequestMapping("/order")
 	//@ResponseBody
 	public @ResponseBody Map<String, Object> order(HttpServletRequest request,
-			HttpServletResponse response , @RequestBody String[][] str) {
+			HttpServletResponse response ,HttpSession session, @RequestBody String[][] str) {
 		//以上若是对象用 List<Good> good 数组用String[] good
 		//System.out.println(request.getParameter("name"));
 		System.out.println("开始调用 oreder.do");
-	System.out.println(str[1][0]);
+		SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMddHHmmss");
+		DecimalFormat df=new  DecimalFormat("#.00");
+      //Calendar cal=Calendar.getInstance();
+		Date date=new Date();
+		Long orderId=Long.parseLong(sdf1.format(date));
+		double totalP=0;
+		for(int i=0 ;i<str.length;i++){
+			totalP+=Double.parseDouble(str[i][3]);
+		}
+		//插入订单数据
+	    Order o=new Order();
+	    o.setOrderId(orderId);
+	    System.out.println("设置orderID"+orderId);
+	    o.setOrderBuyer((String)session.getAttribute("name"));
+	    System.out.println("设置orderbuyer"+session.getAttribute("name"));
+	    o.setOrderTotalprice(Double.parseDouble(df.format(totalP)));
+	    System.out.println("shezhi totalP"+Double.parseDouble(df.format(totalP)));
+	    o.setOrderIscancel(0);
+	    o.setOrderIscomplete(0);
+	    o.setOrderDate(date);
+	    orderService.setOrder(o);
+	    //插入订单详细数据
+	    Detail d=new Detail();
+	    for(int i=0;i<str.length;i++){
+	    	Long detailId=Long.parseLong(String.valueOf(orderId)+String.valueOf(i));
+	    	d.setDetailId(detailId);
+	    	System.out.println("shezhi detail id "+ detailId);
+	    	d.setDetailGoodName(str[i][0]);
+	    	d.setDetailGoodPrice(Double.parseDouble(df.format(Double.parseDouble(str[i][1]))));
+	    	d.setDetailGoodQuantity(Integer.parseInt(str[i][2]));
+	    	d.setDetailGoodTotalprice(Double.parseDouble(df.format(Double.parseDouble(str[i][3]))));
+	    	d.setOrderId(orderId);
+	    	d.setdetailIsCancel(0);
+	    	d.setdetailIsComplete(0);
+	        orderService.setDetail(d);
+	    }
 
 //System.out.println(good);
 		

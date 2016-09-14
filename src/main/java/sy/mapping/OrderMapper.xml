@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sy.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="sy.model.Order" >
+    <id column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_date" property="orderDate" jdbcType="DATE" />
+    <result column="order_iscomplete" property="orderIscomplete" jdbcType="INTEGER" />
+    <result column="order_iscancel" property="orderIscancel" jdbcType="INTEGER" />
+    <result column="order_totalprice" property="orderTotalprice" jdbcType="DOUBLE" />
+    <result column="order_buyer" property="orderBuyer" jdbcType="VARCHAR" />
+    <result column="order_completer" property="orderCompleter" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_date, order_iscomplete, order_iscancel, order_totalprice, order_buyer, 
+    order_completer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order1
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <select id="getAllOrder" resultMap="BaseResultMap" >
+  select * from order1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order1
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="sy.model.Order" >
+    insert into order1 (order_id, order_date, order_iscomplete, 
+      order_iscancel, order_totalprice, order_buyer, 
+      order_completer)
+    values (#{orderId,jdbcType=DOUBLE}, #{orderDate,jdbcType=DATE}, #{orderIscomplete,jdbcType=INTEGER}, 
+      #{orderIscancel,jdbcType=INTEGER}, #{orderTotalprice,jdbcType=DOUBLE}, #{orderBuyer,jdbcType=VARCHAR}, 
+      #{orderCompleter,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="sy.model.Order" >
+    insert into order1
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="orderIscomplete != null" >
+        order_iscomplete,
+      </if>
+      <if test="orderIscancel != null" >
+        order_iscancel,
+      </if>
+      <if test="orderTotalprice != null" >
+        order_totalprice,
+      </if>
+      <if test="orderBuyer != null" >
+        order_buyer,
+      </if>
+      <if test="orderCompleter != null" >
+        order_completer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DOUBLE},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="orderIscomplete != null" >
+        #{orderIscomplete,jdbcType=INTEGER},
+      </if>
+      <if test="orderIscancel != null" >
+        #{orderIscancel,jdbcType=INTEGER},
+      </if>
+      <if test="orderTotalprice != null" >
+        #{orderTotalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderBuyer != null" >
+        #{orderBuyer,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCompleter != null" >
+        #{orderCompleter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="sy.model.Order" >
+    update order1
+    <set >
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="orderIscomplete != null" >
+        order_iscomplete = #{orderIscomplete,jdbcType=INTEGER},
+      </if>
+      <if test="orderIscancel != null" >
+        order_iscancel = #{orderIscancel,jdbcType=INTEGER},
+      </if>
+      <if test="orderTotalprice != null" >
+        order_totalprice = #{orderTotalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderBuyer != null" >
+        order_buyer = #{orderBuyer,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCompleter != null" >
+        order_completer = #{orderCompleter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=DOUBLE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="sy.model.Order" >
+    update order1
+    set order_date = #{orderDate,jdbcType=DATE},
+      order_iscomplete = #{orderIscomplete,jdbcType=INTEGER},
+      order_iscancel = #{orderIscancel,jdbcType=INTEGER},
+      order_totalprice = #{orderTotalprice,jdbcType=DOUBLE},
+      order_buyer = #{orderBuyer,jdbcType=VARCHAR},
+      order_completer = #{orderCompleter,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=DOUBLE}
+  </update>
+</mapper>

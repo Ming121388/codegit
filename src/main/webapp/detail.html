@@ -253,7 +253,7 @@ font-size: 13px;
 				data: {name:$("#name2").val(),psw:$("#password2").val()},
 				type: 'GET',
 				dataType: 'json',
-				url: 'http://192.168.9.141:8080/sssm/userController/login.do',
+				url: localUrl+'/sssm/userController/login.do',
 				//data: {name: "$('#name2').val()",
                  //      psw:"$('#password2').val()"},
 			})
@@ -440,7 +440,7 @@ font-size: 13px;
 <div id="mainlogin">
 <div id="or">or</div>
 <h1>Log in to buy something</h1>
-<form action="http://192.168.9.141:8080/sssm/userController/login.do">
+<form action=localUrl+"/sssm/userController/login.do">
 <input type="text" placeholder="username or email" value="" required id="name2">
 <input type="password" placeholder="password" value="" required id="password2">
 <button type="button"><i class="fa fa-arrow-right" id="submit2"></i></button>
