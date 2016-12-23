@@ -91,6 +91,7 @@ public class AdminController {
 	public @ResponseBody Map<String,String> operateDetail(HttpSession session,String detailId){
 		Map<String,String> map =new HashMap<String, String>();
 		String type=detailId.toString().substring(0,1);
+		
 		long value=Long.valueOf(detailId.toString().substring(1, detailId.length()));
 		Detail d =orderService.getDetailByDetailId(value);
 		System.out.println(type +"+"+ value);
@@ -98,11 +99,12 @@ public class AdminController {
 			orderService.setdetailIsComplete(value, 1);
 			System.out.println("1111");
 			orderService.setDetailCompleter(value, session.getAttribute("name").toString());
-			map.put("msg",d.getDetailGoodName()+" x "+d.getDetailGoodQuantity()+" 消单成功！" );
+			map.put("msg",d.getDetailGoodName()+" x "+d.getDetailGoodQuantity()+" 订单完成！" );
 		}
 		if(type.equals("2")){
 			orderService.setdetailIsCancel(value, 1);
 			orderService.setDetailCompleter(value, session.getAttribute("name").toString());
+			map.put("msg",d.getDetailGoodName()+" x "+d.getDetailGoodQuantity()+" 订单取消！" );
 		}
 		return map;
 	}

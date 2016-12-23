@@ -272,8 +272,9 @@
 </head>
 <body onload="showGoods();">
 	你好登陆成功
+	<a href='orderManager.html'>Manager</a>
 	<input type="button" value='shang'
-		onclick="window.open(localUrl+'/sssm/addGoods.html');">
+		onclick="window.open("+localUrl+"'/sssm/addGoods.html');">
 	<input type="submit" value="点击查询余额" onclick="showYue();">
 	<div id="yue"></div>
 	<form action=localUrl+"/sssm/userController/logOut.do">

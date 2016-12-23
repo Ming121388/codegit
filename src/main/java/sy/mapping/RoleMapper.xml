@@ -3,20 +3,12 @@
 <mapper namespace="sy.dao.RoleMapper" >
   <resultMap id="BaseResultMap" type="sy.model.Role" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
+    <id column="rolename" property="rolename" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, rolename
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from role1
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimary" parameterType="sy.model.Role" >
     delete from role1
     where id = #{id,jdbcType=INTEGER}
+      and rolename = #{rolename,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="sy.model.Role" >
     insert into role1 (id, rolename)
@@ -41,18 +33,4 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="sy.model.Role" >
-    update role1
-    <set >
-      <if test="rolename != null" >
-        rolename = #{rolename,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="sy.model.Role" >
-    update role1
-    set rolename = #{rolename,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

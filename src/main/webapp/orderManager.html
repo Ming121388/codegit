@@ -34,7 +34,7 @@
 			if(values.orderIscomplete==0){
 				isComplete="未完成";
 			    var orderId= values.orderId;
-			res+=orderId+" "+values.orderBuyer+" "+isComplete+"<input id='listB"+key+"' type='button' value='展开' onclick='showDetail("+orderId+")'/><div id='detail"+orderId+"' style='display:none'></div><br>";
+			res+=orderId+" "+values.orderBuyer+" "+isComplete+"<input id='"+orderId+"' type='button' value='展开' onclick='showDetail("+orderId+","+1+")'/><div id='detail"+orderId+"' style='display:none'></div><br>";
 			}	
 			})
 
@@ -46,7 +46,7 @@
 	});
 	
 }
-	function showDetail(orderId){
+	function showDetail(orderId,i){
 		console.log(" orderId=>"+orderId);
 		$.ajax({
 		data:{orderId:orderId},
@@ -58,22 +58,30 @@
 						res1="";
 						var isComplete="";
 						$.each(data.de,function(key,values){
-							if(values.detailIsComplete=="1")
+							if(values.detailIsComplete=="1"){
 								isComplete="已完成";
+								//$('input[id$='+values.detailId+']').css("display","none");
+								res1+=values.orderId+" "+values.detailId+" "+values.detailGoodName+" "+values.detailGoodQuantity+" "+isComplete+" <br>";
+							}
 								else
 									if(values.detailIsCancel=="1"){
 									isComplete="已取消";
-									$('input[id$='+value.detailId+']').css("display","none");
+									//$('input[id=1'+values.detailId+']').css("display","none");
+									res1+=values.orderId+" "+values.detailId+" "+values.detailGoodName+" "+values.detailGoodQuantity+" "+isComplete+" <br>";
 									}
-									else 
+									else {
 										isComplete="未完成";
 						var completeB="1"+values.detailId;
 						var cancelB="2"+values.detailId;
 							res1+=values.orderId+" "+values.detailId+" "+values.detailGoodName+" "+values.detailGoodQuantity+" "+isComplete+"<input type='button' value='完成' id='"+completeB+"' onclick='completeDetail("+completeB+");'> <input type='button' value='取消' onclick='completeDetail("+cancelB+");'> <br>";
-						
+									}
 							})
 						    detail="#detail"+orderId;
-							$(detail).html(res1).toggle(250);
+						if(i==2)
+							$(detail).html(res1);
+						if(i==1)	
+						$(detail).html(res1).toggle(250);
+						
 						
 					},
 					error:function(data){
@@ -86,23 +94,32 @@
 	function completeDetail(i){
  
 		var detailId=i.toString();
-
-	var r=confirm("是否确定完成？");
+		var id=detailId.substring(1);
+		var orderId=detailId.substring(1,id.length);
+		//alert(orderId);
+	var r=confirm("是否确定？");
+	if(r==true){
 	$.ajax({
 		data:{detailId:detailId},
 		dataType:'json',
 		type:'GET',
 		url:localUrl+'/sssm/adminController/operateDetail.do',
 		success:function(data){
-			alert("ok");
+			showDetail(orderId,2);
+		
+			alert(data.msg);
 			},
 			error:function(data){
-				alert("no");
+				alert(data.msg);
 			}
 	
-	});
+	});}
 
-		r==true? $("#"+i).css("display","none"):null;
+		//r==true? $("#"+i).css("display","none"):null;  $("#"+i).parent().find('input').slice(0,2).css("display","none")
+		//r==true? $("#"+i).parent().parent().find('input[id$='+orderId+']').eq(0).click():null;
+		//r==true? showDetail(orderId,2):null;
+		
+		//showDetail(orderId,2);
 		//$("#"+i)[0].style.display="none";
 		//document.getElementById("201608301529390").style.display="none";
 	}

@@ -12,4 +12,5 @@ public interface UserServiceI {
 	public List<User> getAll();
 	
 	public User getUserByName(String name);
+	
 }

@@ -127,6 +127,7 @@ public class UserController {
 			map.put("hide", "1");
 			session.setAttribute("name", u.getName());
 			System.out.println("session 插入"+u.getName());
+//			if(
 			return map;
 		}
 		else if (i == 2) {
@@ -172,6 +173,7 @@ public class UserController {
 		map.put("name", name);
 		if (temp == false) {
 			userService.setUser(name, psw);
+			
 			map.put("msg", "注册成功" + "<a href ='login.html'>去登录</a>");
 			return map;
 		} else {

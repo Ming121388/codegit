@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderServiceI {
 	public void setdetailIsCancel(long detailId, int isCancel) {
 		Detail detail = new Detail();
 		detail.setDetailId(detailId);
-		detail.setdetailIsComplete(isCancel);
+		detail.setdetailIsCancel(isCancel);
 		System.out.println("already seted");
 		detailMapper.updateByPrimaryKeySelective(detail);
 	}

@@ -2,70 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sy.dao.RoleUserMapper" >
   <resultMap id="BaseResultMap" type="sy.model.RoleUser" >
+    <id column="name" property="name" jdbcType="VARCHAR" />
+    <id column="rolename" property="rolename" jdbcType="VARCHAR" />
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="userid" property="userid" jdbcType="VARCHAR" />
-    <result column="roleid" property="roleid" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, userid, roleid
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from roleuser
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimary" parameterType="sy.model.RoleUser" >
     delete from roleuser
-    where id = #{id,jdbcType=INTEGER}
+    where name = #{name,jdbcType=VARCHAR}
+      and rolename = #{rolename,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="sy.model.RoleUser" >
-    insert into roleuser (id, userid, roleid
+    insert into roleuser (name, rolename, id
       )
-    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}
+    values (#{name,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="sy.model.RoleUser" >
     insert into roleuser
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="rolename != null" >
+        rolename,
+      </if>
       <if test="id != null" >
         id,
       </if>
-      <if test="userid != null" >
-        userid,
-      </if>
-      <if test="roleid != null" >
-        roleid,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null" >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=VARCHAR},
-      </if>
-      <if test="roleid != null" >
-        #{roleid,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="sy.model.RoleUser" >
-    update roleuser
-    <set >
-      <if test="userid != null" >
-        userid = #{userid,jdbcType=VARCHAR},
-      </if>
-      <if test="roleid != null" >
-        roleid = #{roleid,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="sy.model.RoleUser" >
-    update roleuser
-    set userid = #{userid,jdbcType=VARCHAR},
-      roleid = #{roleid,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

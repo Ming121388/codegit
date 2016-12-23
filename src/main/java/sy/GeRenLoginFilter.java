@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 public class GeRenLoginFilter implements Filter {
 
 	private final static String[] eixt_url = { "index.jsp", "index.html",
-			"login.html", "login.jsp", "userController/login.do", "relogin.jsp",
-			"uholdcard.do", "/js", "/css", "/images",
+			"login.html", "login.jsp", "userController/login.do",
+			"relogin.jsp", "uholdcard.do", "/js", "/css", "/images",
 			"userController/showUser.do", "userController/zhuCe.do",
 			"keywordslist.jsp", "regprotocol.jsp", "register.jsp", "uarea.do" }; // 不用做权限判断的URL
 
@@ -30,9 +30,13 @@ public class GeRenLoginFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		boolean haveFind = true;
+		boolean requestAdmin = false;
 
 		// System.out.println("req.getRequestURI()==="+req.getRequestURI());
-
+		if (req.getRequestURL().indexOf("orderManager") >= 0){
+			requestAdmin = true;
+			System.out.println("requestAdmin:true");
+		}
 		if (req.getRequestURI().indexOf(".jsp") >= 0
 				|| req.getRequestURI().indexOf(".do") >= 0
 				|| req.getRequestURI().indexOf(".html") >= 0)
@@ -53,6 +57,16 @@ public class GeRenLoginFilter implements Filter {
 			System.out.println("sesson has no user name");
 			return;
 		}
+//		if (requestAdmin == true && req.getSession().getAttribute("name").equals("ming")) {
+//			//res.sendRedirect(req.getContextPath() + "/orderManager.html");
+//			//return;
+//			}
+		 if (requestAdmin == true && !req.getSession().getAttribute("name").equals("ming")) {
+			 System.out.println("not admin");
+				res.sendRedirect(req.getContextPath() + "/login.html");
+				return;
+				}
+
 		chain.doFilter(req, res);
 	}
 
